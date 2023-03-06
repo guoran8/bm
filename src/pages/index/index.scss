@@ -30,6 +30,10 @@
         background-color: #ffffff;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
         border-radius: 20px;
+
+        .info-text {
+            margin-left: 20px;
+        }
     }
 
     >.cell-button {

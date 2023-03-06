@@ -47,6 +47,7 @@ function UserPage() {
 		Taro.getUserProfile({
 			desc: "用于完善会员资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
 			success: (profileRes) => {
+				console.log("res", profileRes);
 				// 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
 				Taro.login({
 					async success(wxLoginRes) {
@@ -105,7 +106,6 @@ function UserPage() {
 				>
 					登录
 				</Button>
-				;
 			</View>
 		);
 	}

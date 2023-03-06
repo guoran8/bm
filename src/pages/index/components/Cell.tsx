@@ -47,8 +47,7 @@ export function Cell(props: CellProps) {
 		<View className='cell'>
 			<View className="cell-info">
 				<Image width="60px" height="60px" src={logo} />
-				<View className="cell-info">
-					<Text>{name}</Text>
+				<View className="info-text">
 					<Text>{name}</Text>
 				</View>
 			</View>
