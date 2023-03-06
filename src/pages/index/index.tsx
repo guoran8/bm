@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Taro from "@tarojs/taro";
 import { View, ScrollView, Text } from "@tarojs/components";
-import { Button } from "@antmjs/vantui";
+import { Toast } from "@antmjs/vantui";
 import { useRootStore } from "../../store";
 import api from "../../utils/api";
 import { useAsyncEffect } from "../../hooks/useAsyncEffect";
@@ -69,11 +69,14 @@ function IndexPage() {
 	}, []);
 
 	const onSubscription = async (id: number, status: boolean) => {
-		console.log("id", id, status);
 		const ids = list.filter((item) => item.subscription).map((item) => item.id);
 
 		if (status) {
 			ids.push(id);
+			Toast.success({
+				message: "已订阅成功!",
+				selector: "#vanToast-demo2",
+			});
 		} else {
 			const idx = ids.findIndex((i) => i === id);
 			ids.splice(idx, 1);
@@ -111,6 +114,7 @@ function IndexPage() {
 					/>
 				))}
 			</ScrollView>
+			<Toast id="customSelector" />
 		</>
 	);
 }
