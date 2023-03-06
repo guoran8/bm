@@ -1,0 +1,30 @@
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+
+    .login-button {
+        width: 80%;
+    }
+}
+
+.user {
+    width: 100%;
+    height: 100vh;
+    padding: 40px 60px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f8f8f8;
+    .user-avatar {
+        margin-bottom: 24px;
+        
+    }
+
+    >.user-info {
+        width: 100%;
+    }
+}

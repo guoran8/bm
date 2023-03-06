@@ -39,6 +39,7 @@ specifiers:
   stylelint: ^14.4.0
   typescript: ^4.1.0
   webpack: 5.69.0
+  zustand: ^4.3.5
 
 dependencies:
   '@antmjs/vantui': 2.5.3_biqbaboplfbrettd7655fr4n2y
@@ -59,6 +60,7 @@ dependencies:
   '@tarojs/taro': 3.6.2_@types+react@18.0.28
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  zustand: 4.3.5_react@18.2.0
 
 devDependencies:
   '@babel/core': 7.21.0
@@ -1733,6 +1735,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     optional: true
 
@@ -1741,6 +1744,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     optional: true
 
@@ -1749,6 +1753,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     optional: true
 
@@ -1757,6 +1762,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     optional: true
 
@@ -8211,6 +8217,7 @@ packages:
     engines: {node: '>= 12.0.0'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -8220,6 +8227,7 @@ packages:
     engines: {node: '>= 12.0.0'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
@@ -8229,6 +8237,7 @@ packages:
     engines: {node: '>= 12.0.0'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -8238,6 +8247,7 @@ packages:
     engines: {node: '>= 12.0.0'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
@@ -12144,6 +12154,14 @@ packages:
       react: 18.2.0
     dev: false
 
+  /use-sync-external-store/1.2.0_react@18.2.0:
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /use/3.1.1:
     resolution: {integrity: sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==}
     engines: {node: '>=0.10.0'}
@@ -12663,3 +12681,19 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  /zustand/4.3.5_react@18.2.0:
+    resolution: {integrity: sha512-2iPUzfwx+g3f0PagOMz2vDO9mZzEp2puFpNe7vrAymVPOEIEUjCPkC4/zy84eAscxIWmTU4j9g6upXYkJdzEFQ==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      immer: '>=9.0'
+      react: '>=16.8'
+    peerDependenciesMeta:
+      immer:
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      use-sync-external-store: 1.2.0_react@18.2.0
+    dev: false

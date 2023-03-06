@@ -26,11 +26,14 @@ export function Cell(props: CellProps) {
 
 	return (
 		<View className='cell'>
-			<Image width="60px" height="60px" src={logo} />
 			<View className="cell-info">
-				<Text>{name}</Text>
-				<Text>{name}</Text>
+				<Image width="60px" height="60px" src={logo} />
+				<View className="cell-info">
+					<Text>{name}</Text>
+					<Text>{name}</Text>
+				</View>
 			</View>
+
 			<View className="cell-button">
 				<Icon name="add" size="52px" color="#F23030" />
 			</View>

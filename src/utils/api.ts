@@ -18,6 +18,10 @@ function getAllNotices() {
 	return HOST_URI + "post/postSchool/school/list";
 }
 
+function getUserInfo() {
+	return HOST_URI + "post/h5Customer/info";
+}
+
 export default {
 	getAllNotices,
 };
