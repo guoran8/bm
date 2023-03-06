@@ -59,7 +59,7 @@ export function Cell(props: CellProps) {
 					<Icon
 						onClick={() => setIsSubscription(true)}
 						name="add"
-						size="52px"
+						size="32px"
 						color="#F23030"
 					/>
 				)}
