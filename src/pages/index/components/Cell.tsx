@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { View, Text } from "@tarojs/components";
-import { Icon, Image } from "@antmjs/vantui";
+import { Icon, Image, Transition } from "@antmjs/vantui";
 import "../index.scss";
 
 interface CellProps {
@@ -8,6 +9,7 @@ interface CellProps {
 }
 
 export function Cell(props: CellProps) {
+	const [isSubscription, setIsSubscription] = useState(false);
 	const { name, logo } = props;
 	// const [threads, setThreads] = useState<IThread[]>([]);
 	// useAsyncEffect(async () => {
@@ -35,7 +37,32 @@ export function Cell(props: CellProps) {
 			</View>
 
 			<View className="cell-button">
-				<Icon name="add" size="52px" color="#F23030" />
+				<Transition
+					duration={{ enter: 300, leave: 1000 }}
+					className="center-x"
+					enterClass="vanEnterClass"
+					enterActiveClass="vanEnterActiveClass"
+					leaveActiveClass="vanLeaveActiveClass"
+					leaveToClass="vanLeaveToClass"
+					key={`fade-righttran`}
+					show={isSubscription}
+					name="fade-right"
+				>
+					<Icon
+						onClick={() => setIsSubscription(false)}
+						name="bell"
+						size="32px"
+						color="#F23030"
+					/>
+				</Transition>
+				{!isSubscription && (
+					<Icon
+						onClick={() => setIsSubscription(true)}
+						name="add"
+						size="52px"
+						color="#F23030"
+					/>
+				)}
 			</View>
 		</View>
 	);

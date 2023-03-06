@@ -46,3 +46,14 @@
         background-color: rgba(242, 48, 48, 0.2);
     }
 }
+
+.vanEnterActiveClass,
+.vanLeaveActiveClass {
+  transitionproperty: backgroundColor, transform;
+}
+
+.vanEnterClass,
+.vanLeaveToClass {
+  backgroundcolor: red;
+  transform: rotate(-360deg) translate3d(-100%, -100%, 0);
+}
