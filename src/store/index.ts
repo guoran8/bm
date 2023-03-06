@@ -8,12 +8,16 @@ import {
 
 type UserInfo = {
 	nickName: string;
+	phone?: string;
 	avatarUrl: string;
+	gender: number | undefined;
+	WCid: string;
 };
 
 interface UserInfoState {
 	userInfo: UserInfo | null;
 	setUserInfo: (payload: UserInfo) => void;
+	setUserPhone: (phone: string) => void;
 }
 
 export const useRootStore = create(
@@ -23,6 +27,16 @@ export const useRootStore = create(
 			setUserInfo: (payload: UserInfo) =>
 				set(() => ({
 					userInfo: payload,
+				})),
+			setUserPhone: (phone: string) =>
+				set((state) => ({
+					userInfo: {
+						phone,
+						nickName: state.userInfo?.nickName || "",
+						avatarUrl: state.userInfo?.avatarUrl || "",
+						gender: state.userInfo?.gender ?? undefined,
+						WCid: state.userInfo?.WCid || "",
+					},
 				})),
 		}),
 		{

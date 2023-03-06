@@ -1,31 +1,48 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Taro from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
-import { Icon, Image, Transition } from "@antmjs/vantui";
+import { Icon, Image, Transition, Toast } from "@antmjs/vantui";
+import { useRootStore } from "../../../store";
 import "../index.scss";
 
 interface CellProps {
+	id: number;
 	name: string;
 	logo: string;
+	subscription: boolean;
+	onSubscription: (id: number, status: boolean) => void;
 }
 
 export function Cell(props: CellProps) {
-	const [isSubscription, setIsSubscription] = useState(false);
-	const { name, logo } = props;
-	// const [threads, setThreads] = useState<IThread[]>([]);
-	// useAsyncEffect(async () => {
-	// 	try {
-	// 		const res = await Taro.request<IThread[]>({
-	// 			url: api.getLatestTopic(),
-	// 		});
-	// 		setLoading(false);
-	// 		setThreads(res.data);
-	// 	} catch (error) {
-	// 		Taro.showToast({
-	// 			title: "载入远程数据错误",
-	// 		});
-	// 	}
-	// }, []);
+	const [isSubscription, setIsSubscription] = useState(props.subscription);
+	const { userInfo, setUserInfo } = useRootStore();
+	const { id, name, logo, onSubscription } = props;
 
+	const showLoginToast = () => {
+		Toast.fail({
+			message: "请登录",
+			selector: "#vanToast-demo2",
+			onClose: () => {
+				Taro.switchTab({
+					url: "/pages/user/index",
+				});
+			},
+		});
+	};
+
+	const handleSubscriptionClick = (subscription: boolean) => {
+		if (!userInfo) {
+			showLoginToast();
+			return;
+		}
+
+		setIsSubscription(subscription);
+		onSubscription && onSubscription(id, subscription);
+	};
+
+	useEffect(() => {
+		setIsSubscription(props.subscription);
+	}, [props.subScription]);
 	return (
 		<View className='cell'>
 			<View className="cell-info">
@@ -33,6 +50,7 @@ export function Cell(props: CellProps) {
 				<View className="cell-info">
 					<Text>{name}</Text>
 					<Text>{name}</Text>
+					<Text>{isSubscription ? "true" : "false"}</Text>
 				</View>
 			</View>
 
@@ -49,7 +67,7 @@ export function Cell(props: CellProps) {
 					name="fade-right"
 				>
 					<Icon
-						onClick={() => setIsSubscription(false)}
+						onClick={() => handleSubscriptionClick(false)}
 						name="bell"
 						size="32px"
 						color="#F23030"
@@ -57,13 +75,14 @@ export function Cell(props: CellProps) {
 				</Transition>
 				{!isSubscription && (
 					<Icon
-						onClick={() => setIsSubscription(true)}
+						onClick={() => handleSubscriptionClick(true)}
 						name="add"
 						size="32px"
 						color="#F23030"
 					/>
 				)}
 			</View>
+			<Toast id="vanToast-demo2" />
 		</View>
 	);
 }

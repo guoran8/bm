@@ -18,10 +18,27 @@ function getAllNotices() {
 	return HOST_URI + "post/postSchool/school/list";
 }
 
+// 订阅公告
+function updateSubcription() {
+	return HOST_URI + "post/postSchool/schools/save";
+}
+
+// 获取用户信息
 function getUserInfo() {
 	return HOST_URI + "post/h5Customer/info";
 }
 
+function userLogin() {
+	return HOST_URI + "post/noToken/login";
+}
+
+function updateUser() {
+	return HOST_URI + "post/h5Customer/update";
+}
+
 export default {
 	getAllNotices,
+	userLogin,
+	updateUser,
+	updateSubcription,
 };
