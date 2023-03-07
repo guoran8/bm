@@ -7,23 +7,15 @@ import "./index.scss";
 import { useRootStore } from "../../store";
 
 function UserPage() {
-	const [loading, setLoading] = useState(true);
-	const { userInfo, setUserInfo, setUserAvatar, setUserPhone } = useRootStore();
+	const {
+		userInfo,
+		setUserInfo,
+		setUserAvatar,
+		setUserPhone,
+		setUserNickname,
+	} = useRootStore();
 	const [phone, setPhone] = useState(userInfo?.phone);
-	// const [threads, setThreads] = useState<IThread[]>([]);
-	// useAsyncEffect(async () => {
-	// 	try {
-	// 		const res = await Taro.request<IThread[]>({
-	// 			url: api.getLatestTopic(),
-	// 		});
-	// 		setLoading(false);
-	// 		setThreads(res.data);
-	// 	} catch (error) {
-	// 		Taro.showToast({
-	// 			title: "载入远程数据错误",
-	// 		});
-	// 	}
-	// }, [])
+
 	const handleChooseAvatarClick = async (e: any) => {
 		// 更新用户信息
 		const { avatarUrl } = e.detail;
@@ -40,6 +32,21 @@ function UserPage() {
 
 		setUserAvatar(avatarUrl);
 	};
+
+	const onSetNiackname = async (e: any) => {
+		await Taro.request({
+			url: api.updateUser(),
+			header: {
+				WCid: userInfo?.WCid,
+			},
+			method: "POST",
+			data: {
+				nickName: e,
+			},
+		});
+
+		setUserNickname(e);
+	};
 	const handleSavePhoneClick = async () => {
 		await Taro.request({
 			url: api.updateUser(),
@@ -52,7 +59,7 @@ function UserPage() {
 			},
 		});
 
-		setUserPhone(phone);
+		setUserPhone(phone as string);
 	};
 
 	const formatGender = (type: number | undefined) => {
@@ -86,9 +93,7 @@ function UserPage() {
 								},
 								method: "POST",
 								data: {
-									nickName: profileRes.userInfo.nickName,
 									gender: profileRes.userInfo.gender,
-									avatarUrl: profileRes.userInfo.avatarUrl,
 								},
 							});
 
@@ -138,7 +143,7 @@ function UserPage() {
 			<CellGroup className="user-info" inset>
 				<Field
 					value={userInfo.nickName}
-					clearable
+					onInput={(e) => onSetNiackname(e.detail)}
 					type="nickname"
 					label="昵称"
 					placeholder="请输入用户名"
@@ -165,13 +170,6 @@ function UserPage() {
 					}
 				/>
 			</CellGroup>
-			<Button
-				onClick={handleLoginClick}
-				className="login-button"
-				color="#F23030"
-			>
-				登录
-			</Button>
 		</View>
 	);
 }
