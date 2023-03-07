@@ -1,18 +1,30 @@
 import Taro from "@tarojs/taro";
-import { Component, PropsWithChildren } from "react";
+import { Component, PropsWithChildren, useEffect } from "react";
 import "./app.scss";
 
-class App extends Component<PropsWithChildren> {
-	componentDidMount() {}
+import api from "./utils/api";
+import { useRootStore } from "./store";
 
-	componentDidShow() {}
+function App(props: PropsWithChildren) {
+	const { userInfo, setUserNickname, setUserAvatar, setUserPhone } =
+		useRootStore();
 
-	componentDidHide() {}
+	useEffect(() => {
+		Taro.request({
+			url: api.getUserInfo(),
+			header: {
+				WCid: userInfo?.WCid,
+			},
+			method: "POST",
+			data: {},
+		}).then((res) => {
+			setUserNickname(res.data.data.nickName);
+			setUserAvatar(res.data.data.avatarUrl);
+			setUserPhone(res.data.data.phoneNumber);
+		});
+	}, []);
 
-	render() {
-		// this.props.children 是将要会渲染的页面
-		return this.props.children;
-	}
+	return props.children;
 }
 
 export default App;

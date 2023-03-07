@@ -38,6 +38,7 @@ function updateUser() {
 
 export default {
 	getAllNotices,
+	getUserInfo,
 	userLogin,
 	updateUser,
 	updateSubcription,

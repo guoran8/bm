@@ -15,6 +15,7 @@ type UserInfo = {
 };
 
 interface UserInfoState {
+	isLogin: boolean;
 	userInfo: UserInfo | null;
 	setUserInfo: (payload: UserInfo) => void;
 	setUserPhone: (phone: string) => void;
@@ -26,6 +27,11 @@ export const useRootStore = create(
 	persist<UserInfoState>(
 		(set) => ({
 			userInfo: null,
+			isLogin: false,
+			setIsLogin: (isLogin: boolean) =>
+				set(() => ({
+					isLogin: isLogin,
+				})),
 			setUserInfo: (payload: UserInfo) =>
 				set(() => ({
 					userInfo: payload,

@@ -8,6 +8,8 @@ import { useRootStore } from "../../store";
 
 function UserPage() {
 	const {
+		isLogin,
+		setIsLogin,
 		userInfo,
 		setUserInfo,
 		setUserAvatar,
@@ -70,7 +72,6 @@ function UserPage() {
 		Taro.getUserProfile({
 			desc: "用于完善会员资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
 			success: (profileRes) => {
-				console.log("res", profileRes);
 				// 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
 				Taro.login({
 					async success(wxLoginRes) {
@@ -97,13 +98,23 @@ function UserPage() {
 								},
 							});
 
-							console.log("WCid", loginRes.data.data.token);
-
-							setUserInfo({
-								nickName: profileRes.userInfo.nickName,
-								gender: profileRes.userInfo.gender,
-								avatarUrl: profileRes.userInfo.avatarUrl,
-								WCid: loginRes.data.data.token,
+							Taro.request({
+								url: api.getUserInfo(),
+								header: {
+									WCid: loginRes.data.data.token,
+								},
+								method: "POST",
+								data: {},
+							}).then((res) => {
+								setUserInfo({
+									nickName: res.data.data.nickName,
+									gender: profileRes.userInfo.gender,
+									phone: res.data.data.phoneNumber,
+									avatarUrl: res.data.data.avatarUrl,
+									WCid: loginRes.data.data.token,
+								});
+								setPhone(res.data.data.phoneNumber);
+								setIsLogin(true);
 							});
 						}
 					},
@@ -117,7 +128,7 @@ function UserPage() {
 		});
 	};
 
-	if (!userInfo) {
+	if (!isLogin) {
 		return (
 			<View className="login">
 				<Button
