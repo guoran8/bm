@@ -18,6 +18,7 @@ interface UserInfoState {
 	userInfo: UserInfo | null;
 	setUserInfo: (payload: UserInfo) => void;
 	setUserPhone: (phone: string) => void;
+	setUserAvatar: (avatar: string) => void;
 }
 
 export const useRootStore = create(
@@ -34,6 +35,16 @@ export const useRootStore = create(
 						phone,
 						nickName: state.userInfo?.nickName || "",
 						avatarUrl: state.userInfo?.avatarUrl || "",
+						gender: state.userInfo?.gender ?? undefined,
+						WCid: state.userInfo?.WCid || "",
+					},
+				})),
+			setUserAvatar: (avatar: string) =>
+				set((state) => ({
+					userInfo: {
+						phone: state.userInfo?.phone,
+						nickName: state.userInfo?.nickName || "",
+						avatarUrl: avatar,
 						gender: state.userInfo?.gender ?? undefined,
 						WCid: state.userInfo?.WCid || "",
 					},

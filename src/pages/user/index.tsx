@@ -8,7 +8,7 @@ import { useRootStore } from "../../store";
 
 function UserPage() {
 	const [loading, setLoading] = useState(true);
-	const { userInfo, setUserInfo, setUserPhone } = useRootStore();
+	const { userInfo, setUserInfo, setUserAvatar, setUserPhone } = useRootStore();
 	const [phone, setPhone] = useState(userInfo?.phone);
 	// const [threads, setThreads] = useState<IThread[]>([]);
 	// useAsyncEffect(async () => {
@@ -24,6 +24,22 @@ function UserPage() {
 	// 		});
 	// 	}
 	// }, [])
+	const handleChooseAvatarClick = async (e: any) => {
+		// 更新用户信息
+		const { avatarUrl } = e.detail;
+		const userRes = await Taro.request({
+			url: api.updateUser(),
+			header: {
+				WCid: userInfo?.WCid,
+			},
+			method: "POST",
+			data: {
+				avatarUrl: avatarUrl,
+			},
+		});
+
+		setUserAvatar(avatarUrl);
+	};
 	const handleSavePhoneClick = async () => {
 		await Taro.request({
 			url: api.updateUser(),
@@ -105,54 +121,56 @@ function UserPage() {
 				>
 					登录
 				</Button>
-				;
 			</View>
 		);
 	}
 
 	return (
 		<View className='user'>
-			<View className="user-avatar">
-				<Image src={userInfo.avatarUrl} round width="100px" height="100px" />
-				{/* <Text>编辑</Text> */}
-			</View>
+			<Button
+				className="avatar-wrapper"
+				onChooseAvatar={handleChooseAvatarClick}
+				openType="chooseAvatar"
+			>
+				<Image className="avatar" src={userInfo.avatarUrl} />
+			</Button>
 			<CellGroup className="user-info" inset>
-				<CellGroup>
-					{/* <Toast id="Field-demo2" /> */}
-					<Field
-						value={userInfo.nickName}
-						clearable
-						label="昵称"
-						placeholder="请输入用户名"
-						disabled
-					/>
-					<Field
-						type="text"
-						value={formatGender(userInfo.gender)}
-						label="性别"
-						placeholder="请输入密码"
-						disabled
-					/>
-					<Field
-						value={phone}
-						onChange={(e) => setPhone(e.detail)}
-						center
-						clearable
-						type="number"
-						label="手机号码"
-						placeholder="请输手机号码"
-						renderButton={
-							<Button
-								onClick={handleSavePhoneClick}
-								size="small"
-								type="primary"
-							>
-								保存
-							</Button>
-						}
-					/>
-				</CellGroup>
+				<Field
+					value={userInfo.nickName}
+					clearable
+					type="nickname"
+					label="昵称"
+					placeholder="请输入用户名"
+				/>
+				<Field
+					type="text"
+					value={formatGender(userInfo.gender)}
+					label="性别"
+					placeholder="请输入密码"
+					disabled
+				/>
+				<Field
+					value={phone}
+					onChange={(e) => setPhone(e.detail)}
+					center
+					clearable
+					type="number"
+					label="手机号码"
+					placeholder="请输手机号码"
+					renderButton={
+						<Button onClick={handleSavePhoneClick} size="small" type="primary">
+							保存
+						</Button>
+					}
+				/>
 			</CellGroup>
+			<Button
+				onClick={handleLoginClick}
+				className="login-button"
+				color="#F23030"
+			>
+				登录
+			</Button>
 		</View>
 	);
 }
