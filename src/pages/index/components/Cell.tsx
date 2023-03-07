@@ -47,14 +47,15 @@ export function Cell(props: CellProps) {
 		<View className='cell'>
 			<View className="cell-info">
 				<Image width="60px" height="60px" src={logo} />
-				<View className="cell-info">
+				<View className="info-text">
 					<Text>{name}</Text>
-					<Text>{name}</Text>
-					<Text>{isSubscription ? "true" : "false"}</Text>
 				</View>
 			</View>
 
-			<View className="cell-button">
+			<View
+				className="cell-button"
+				style={{ backgroundColor: isSubscription ? "" : "#e6e6e6" }}
+			>
 				<Transition
 					duration={{ enter: 300, leave: 1000 }}
 					className="center-x"
@@ -69,7 +70,7 @@ export function Cell(props: CellProps) {
 					<Icon
 						onClick={() => handleSubscriptionClick(false)}
 						name="bell"
-						size="32px"
+						size="28px"
 						color="#F23030"
 					/>
 				</Transition>
@@ -78,7 +79,7 @@ export function Cell(props: CellProps) {
 						onClick={() => handleSubscriptionClick(true)}
 						name="add"
 						size="32px"
-						color="#F23030"
+						color="#929292"
 					/>
 				)}
 			</View>
